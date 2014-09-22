@@ -41,6 +41,10 @@ class ReplayTopo(Topo):
 			host = self.addHost('h%s' % (h,))
 			self.addLink(host, centralSwitch, bw=linkBWCS) 
 		
+def MakeRequests(host, requests=None):
+    h = net.get('h%s' % (host,))
+    for request in requests:
+        h.cmd('wget 127.0.0.1%s > /dev/null' % (request.split(' ')[1],))
 
 def ReplayTraffic(servers, controllerIP, linkBWSS, linkBWCS, traffic):
 
@@ -71,7 +75,9 @@ def ReplayTraffic(servers, controllerIP, linkBWSS, linkBWCS, traffic):
 	#net.interact()
 
     # Replay the traffic
-	
+    for host in requests:
+        Process(target=MakeRequests, args=(host, requests[host])).start()
+
 	net.stop()
 
 if __name__ == '__main__':
