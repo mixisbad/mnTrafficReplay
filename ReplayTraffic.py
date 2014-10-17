@@ -44,7 +44,7 @@ class ReplayTopo(Topo):
 def MakeRequests(host, requests=None):
     h = net.get('h%s' % (host,))
     for request in requests:
-        h.cmd('wget 127.0.0.1%s > /dev/null' % (request.split(' ')[1],))
+        h.cmd('wget http://127.0.0.1%s > /dev/null' % (request.split(' ')[1],))
 
 def ReplayTraffic(servers, controllerIP, linkBWSS, linkBWCS, traffic):
 
@@ -82,7 +82,7 @@ def ReplayTraffic(servers, controllerIP, linkBWSS, linkBWCS, traffic):
 
 if __name__ == '__main__':
 	# Main method of the script
-	# Arguments: Servers, Number of Malicious, Number of Normal, IAT of normal hosts, controller IP, 
+	# Arguments: Servers, controller IP, 
 	#		 the link speed on the server side, the link speed on the client side 
 	setLogLevel('info')
 	servers = int(argv[1])
